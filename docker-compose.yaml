@@ -1,8 +1,10 @@
+cat > docker-compose.yml << 'EOF'
+version: '2'
+
 services:
   database:
     image: postgres:16-alpine
     container_name: todolist-db
-    restart: always
     environment:
       POSTGRES_DB: db_todo
       POSTGRES_USER: postgres
@@ -15,27 +17,21 @@ services:
   backend:
     build: ./todolist-api
     container_name: todolist-api
-    depends_on:
-      database:
-        condition: service_healthy
+    links:
+      - database
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/db_todo
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123456
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     ports:
       - "8080:8080"
 
   frontend:
-    build:
-      context: ./todolist-fe
-      args:
-        VITE_SERVER_URI: http://backend:8080/api/v1
+    build: ./todolist-fe
     container_name: todolist-fe
-    depends_on:
-      - backend
     ports:
       - "80:80"
 
 volumes:
   postgres_data:
+EOF
