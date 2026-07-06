@@ -11,6 +11,20 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  flyway:
+    image: flyway/flyway
+    container_name: todolist-flyway
+    command: -configFiles=/flyway/conf/flyway.conf -locations=filesystem:/flyway/sql migrate
+    volumes:
+      - ./todolist-database/db/migration:/flyway/sql
+      - ./todolist-database/flyway.conf:/flyway/conf/flyway.conf
+  depends_on:
+    - database
+  environment:
+    FLYWAY_USER: postgres
+    FLYWAY_PASSWORD: 123456
+    FLYWAY_URL: jdbc:postgresql://database:5432/db_todo
+
   backend:
     build: ./todolist-api
     container_name: todolist-api
