@@ -2,6 +2,8 @@
 
 Ứng dụng quản lý công việc (Todo) gồm 3 module: `todolist-api`, `todolist-fe`, `todolist-database`.
 
+🌐 **Link Live Demo:** [http://nam23211.id.vn/](http://nam23211.id.vn/)
+
 ## Tech Stack
 
 ### Backend (`todolist-api`)
@@ -86,3 +88,43 @@ npm run dev
 ```
 
 Frontend chạy tại `http://localhost:5173`. File `.env` đã cấu hình `VITE_SERVER_URI=http://localhost:8080/api/v1`.
+
+
+## 🚀 Triển khai bằng Docker (Production)
+
+### Yêu cầu
+- Docker & Docker Compose đã cài đặt
+- Port 80, 8080, 3307 còn trống
+
+### Cách chạy nhanh
+
+```bash
+# Clone project
+git clone 
+cd TodoList
+
+# Chạy toàn bộ hệ thống (Frontend, Backend, Database)
+docker-compose up -d --build
+```
+
+### Sau khi deploy
+
+Hệ thống sẽ chạy tại:
+- **Frontend:** http://localhost (port 80)
+- **Backend API:** http://localhost:8080/api/v1
+- **Database:** localhost:3307 (internal only)
+- **Swagger UI:** http://localhost:8080/swagger-ui.html
+
+### Verify
+
+```bash
+# Check services
+docker-compose ps
+
+# Check logs
+docker-compose logs backend
+docker-compose logs frontend
+
+# Test API
+curl http://localhost:8080/api/v1/todos
+```
