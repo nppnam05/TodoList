@@ -29,11 +29,10 @@ services:
     build:
       context: ./todolist-fe
       args:
-        VITE_SERVER_URI: http://localhost:8080/api/v1
+        VITE_SERVER_URI: http://nam23211.id.vn/api/v1
     container_name: todolist-fe
     ports:
       - "80:80"
 
 volumes:
   postgres_data:
-EOF
