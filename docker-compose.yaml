@@ -1,9 +1,8 @@
-version: '3.8'
-
 services:
   database:
     image: postgres:16-alpine
     container_name: todolist-db
+    restart: always
     environment:
       POSTGRES_DB: db_todo
       POSTGRES_USER: postgres
@@ -12,11 +11,6 @@ services:
       - "3307:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   backend:
     build: ./todolist-api
@@ -31,11 +25,6 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
     ports:
       - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/swagger-ui.html"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
 
   frontend:
     build:
