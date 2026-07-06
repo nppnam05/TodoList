@@ -18,18 +18,18 @@ services:
     volumes:
       - ./todolist-database/db/migration:/flyway/sql
       - ./todolist-database/flyway.conf:/flyway/conf/flyway.conf
-  depends_on:
-    - database
-  environment:
-    FLYWAY_USER: postgres
-    FLYWAY_PASSWORD: 123456
-    FLYWAY_URL: jdbc:postgresql://database:5432/db_todo
+    depends_on:
+      - database
+    environment:
+      FLYWAY_USER: postgres
+      FLYWAY_PASSWORD: 123456
+      FLYWAY_URL: jdbc:postgresql://database:5432/db_todo
 
   backend:
     build: ./todolist-api
     container_name: todolist-api
     depends_on:
-      - database
+      - flyway
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/db_todo
       SPRING_DATASOURCE_USERNAME: postgres
