@@ -103,6 +103,9 @@ Frontend chạy tại `http://localhost:5173`. File `.env` đã cấu hình `VIT
 git clone 
 cd TodoList
 
+# Xóa .env dev (để Docker ARG hoạt động)
+rm todolist-fe/.env
+
 # Chạy toàn bộ hệ thống (Frontend, Backend, Database)
 docker-compose up -d --build
 ```
