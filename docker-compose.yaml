@@ -1,7 +1,7 @@
 services:
   database:
     image: postgres:16-alpine
-    container_name: todolist-db
+    container_name: db-todo
     environment:
       POSTGRES_DB: db_todo
       POSTGRES_USER: postgres
